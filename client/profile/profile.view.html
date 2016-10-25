@@ -1,9 +1,10 @@
 <div layout="row" layout-align="center center">
-    <div flex="50" flex-sm="80" flex-xs="90">
+    <div flex="50" flex-sm="70" flex-xs="90">
         <md-content>
             <md-tabs md-border-bottom md-dynamic-height>
                 <md-tab label="you">
                     <md-card theme="default">
+                        <img src="http://placekitten.com/600/500" class="md-card-image hide-xl hide-lg hide-md hide-sm">
                         <md-card-title>
                             <md-card-title-text>
                                 <span class="md-headline">{{user.username}}</span>
@@ -11,62 +12,19 @@
                                 <span class="md-subhead">{{user.email}}</span>
                             </md-card-title-text>
                             <md-card-title-media>
-                                <div class="md-media-md card-media hide-xl hide-lg hide-md">
-                                    <img src="http://placekitten.com/200/200">
-                                </div>
-                                <div class="md-media-lg card-media hide-sm hide-xs">
+                                <div class="md-media-lg card-media hide-xs">
                                     <img src="http://placekitten.com/200/200">
                                 </div>
                             </md-card-title-media>
                         </md-card-title>
-                        <md-toolbar>
-                            <div class="md-toolbar-tools">My Profile</div>
-                        </md-toolbar>
-
-                        <md-content style="height: 54vh;">
-                            <section>
-                                <md-subheader class="md-primary">Who I Am</md-subheader>
-                                <md-list layout-padding>
-                                    <md-list-item class="md-3-line">
-                                        <div class="md-list-item-text">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci
-                                                cumque doloribus eligendi magni modi, molestias odio quae recusandae
-                                                voluptatum. Adipisci dolorem ea eaque ex itaque iusto laboriosam
-                                                molestiae quis.
-                                            </p>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci
-                                                cumque doloribus eligendi magni modi, molestias odio quae recusandae
-                                                voluptatum. Adipisci dolorem ea eaque ex itaque iusto laboriosam
-                                                molestiae quis.
-                                            </p>
-                                        </div>
-                                    </md-list-item>
-                                </md-list>
-                            </section>
-                            <section>
-                                <md-subheader class="md-accent">My Goals</md-subheader>
-                                <md-list layout-padding>
-                                    <md-list-item class="md-3-line">
-                                        <div class="md-list-item-text">
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci
-                                                cumque doloribus eligendi magni modi, molestias odio quae recusandae
-                                                voluptatum. Adipisci dolorem ea eaque ex itaque iusto laboriosam
-                                                molestiae quis.
-                                            </p>
-                                            <p>
-                                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. A adipisci
-                                                cumque doloribus eligendi magni modi, molestias odio quae recusandae
-                                                voluptatum. Adipisci dolorem ea eaque ex itaque iusto laboriosam
-                                                molestiae quis.
-                                            </p>
-                                        </div>
-                                    </md-list-item>
-                                </md-list>
-                            </section>
-                        </md-content>
+                        <md-card-content class="hide-xs">
+                            <md-button class="md-primary" ng-click="editProfile()">Edit Profile</md-button>
+                            <md-button class="md-warn">Change Password</md-button>
+                        </md-card-content>
+                        <md-card-actions layout="column" layout-align="start" class="hide-xl hide-lg hide-md hide-sm">
+                            <md-button class="md-primary" ng-click="editProfile()">Edit Profile</md-button>
+                            <md-button class="md-warn">Change Password</md-button>
+                        </md-card-actions>
                     </md-card>
                 </md-tab>
             </md-tabs>
