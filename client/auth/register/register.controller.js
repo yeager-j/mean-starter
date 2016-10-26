@@ -3,12 +3,16 @@
  */
 
 (function () {
-    registerController.$inject = ['$scope', '$location', 'authentication', '$mdToast'];
-    function registerController($scope, $location, authentication, $mdToast) {
-        $scope.user = {};
+    angular.module('starterkit')
+        .controller('RegisterController', RegisterController);
+    
+    RegisterController.$inject = ['$location', 'authentication', '$mdToast'];
+    function RegisterController($location, authentication, $mdToast) {
+        var vm = this;
+        vm.user = {};
 
-        $scope.register = function () {
-            authentication.register($scope.user, function (response) {
+        vm.register = function () {
+            authentication.register(vm.user, function (response) {
                 if (response.status == 200) {
                     $location.path('/');
                     $mdToast.show(
@@ -26,7 +30,4 @@
             })
         };
     }
-
-    angular.module('starterkit')
-        .controller('registerCtrl', registerController)
 })();

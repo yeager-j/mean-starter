@@ -3,8 +3,11 @@
  */
 
 (function () {
-    fetchUser.$inject = ['authentication'];
-    function fetchUser(authentication) {
+    angular.module('starterkit')
+        .factory('fetchUser', FetchUserFactory);
+
+    FetchUserFactory.$inject = ['authentication'];
+    function FetchUserFactory(authentication) {
         function getUser(uuid, callback) {
             authentication.getUser(uuid).then(function (response) {
                 callback(response.data);
@@ -38,7 +41,4 @@
             getAllUsers: getAllUsers
         }
     }
-
-    angular.module('starterkit')
-        .factory('fetchUser', fetchUser)
 })();

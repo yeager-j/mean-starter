@@ -3,14 +3,15 @@
  */
 
 (function () {
-    function navigation() {
+    angular.module('starterkit')
+        .directive('navigation', NavigationDirective);
+
+    function NavigationDirective() {
         return {
             restrict: 'EA',
             templateUrl: '/common/directives/navigation/navigation.template.html',
-            controller: 'navCtrl'
+            controller: 'NavigationController',
+            controllerAs: 'vm'
         }
     }
-
-    angular.module('starterkit')
-        .directive('navigation', navigation)
 })();

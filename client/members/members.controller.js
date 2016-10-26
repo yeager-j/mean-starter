@@ -1,13 +1,14 @@
 (function () {
-    membersController.$inject = ['$scope', 'fetchUser'];
-    function membersController($scope, fetchUser) {
-        $scope.users = [];
+    angular.module('starterkit')
+        .controller('MemberController', MemberController);
+
+    MemberController.$inject = ['fetchUser'];
+    function MemberController(fetchUser) {
+        var vm = this;
+        vm.users = [];
 
         fetchUser.getAllUsers(function (users) {
-            $scope.users = users;
+            vm.users = users;
         });
     }
-
-    angular.module('starterkit')
-        .controller('membersCtrl', membersController);
 })();

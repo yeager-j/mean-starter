@@ -3,23 +3,38 @@
  */
 
 (function () {
-    navController.$inject = ['$location', '$route', '$scope', '$mdSidenav', '$mdToast', 'authentication', 'fetchUser'];
-    function navController($location, $route, $scope, $mdSidenav, $mdToast, authentication, fetchUser) {
-        $scope.user = {
+    angular.module('starterkit')
+        .controller('NavigationController', NavigationController);
+
+    NavigationController.$inject = ['$scope', '$location', '$mdSidenav', '$mdToast', 'authentication', 'fetchUser'];
+    function NavigationController($scope, $location, $mdSidenav, $mdToast, authentication, fetchUser) {
+        var vm = this;
+        vm.user = {
             username: 'Guest'
         };
 
-        $scope.school = {};
+        vm.nav = [
+            {
+                icon: 'home',
+                location: 'Home',
+                path: '#/'
+            },
+            {
+                icon: 'group',
+                location: 'Members',
+                path: '#/members'
+            }
+        ];
 
-        $scope.toggleSidenav = function () {
+        vm.toggleSidenav = function () {
             $mdSidenav('navigation').toggle();
         };
 
-        $scope.toggleUsernav = function () {
+        vm.toggleUsernav = function () {
             $mdSidenav('userNav').toggle();
         };
 
-        $scope.logout = function () {
+        vm.logout = function () {
             authentication.logout();
             $location.path('/');
             $mdToast.show(
@@ -32,32 +47,32 @@
         $scope.$watch(function () {
             return authentication.getToken();
         }, function (newValue, oldValue) {
-            $scope.userNav = [];
+            vm.userNav = [];
 
             if (authentication.isLoggedIn()) {
-                $scope.userNav = [];
-                $scope.userNav.push({
-                        icon: 'person',
-                        location: 'Your Profile',
-                        path: '#/profile/' + $scope.user.username
-                    });
+                vm.userNav = [];
+                vm.userNav.push({
+                    icon: 'person',
+                    location: 'Your Profile',
+                    path: '#/profile/' + vm.user.username
+                });
 
                 fetchUser.getCurrentUser(function (user) {
-                    $scope.user = user;
-                    
-                    if ($scope.user.rank === 3) {
-                        $scope.userNav.push({
+                    vm.user = user;
+
+                    if (vm.user.rank === 3) {
+                        vm.userNav.push({
                             icon: 'dashboard',
                             location: 'Admin Panel',
                             path: '#/blogs'
                         });
                     }
 
-                    $scope.userNav[0].path = '#/profile/' + $scope.user.username;
+                    vm.userNav[0].path = '#/profile/' + vm.user.username;
                 })
             } else {
-                $scope.userNav = [];
-                $scope.userNav.push({
+                vm.userNav = [];
+                vm.userNav.push({
                         icon: 'exit_to_app',
                         location: 'Login',
                         path: '#/login'
@@ -68,28 +83,12 @@
                         path: '#/register'
                     });
 
-                $scope.user = {
+                vm.user = {
                     username: 'Guest'
                 }
             }
 
-            $scope.isLoggedIn = authentication.isLoggedIn();
+            vm.isLoggedIn = authentication.isLoggedIn();
         });
-
-        $scope.nav = [
-            {
-                icon: 'home',
-                location: 'Home',
-                path: '#/'
-            },
-            {
-                icon: 'group',
-                location: 'Members',
-                path: '#/members'
-            }
-        ];
     }
-
-    angular.module('starterkit')
-        .controller('navCtrl', navController)
 })();

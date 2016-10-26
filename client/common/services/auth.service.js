@@ -3,8 +3,11 @@
  */
 
 (function () {
-    authService.$inject = ['$http', '$window', '$route'];
-    function authService($http, $window, $route) {
+    angular.module('starterkit')
+        .service('authentication', AuthenticationService);
+
+    AuthenticationService.$inject = ['$http', '$window', '$route'];
+    function AuthenticationService($http, $window, $route) {
         this.saveToken = function (token) {
             $window.localStorage['mean-token'] = token;
         };
@@ -89,7 +92,4 @@
             return $http.get('/api/get_users');
         }
     }
-
-    angular.module('starterkit')
-        .service('authentication', authService)
 })();

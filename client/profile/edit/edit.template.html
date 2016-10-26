@@ -1,12 +1,12 @@
 <md-dialog flex="50" flex-sm="80" flex-xs="90">
     <md-dialog-content class="md-dialog-content">
         <h3>Edit Your Settings</h3>
-        <form name="editSettings" ng-submit="edit()">
+        <form name="editSettings" ng-submit="vm.edit()">
             <div layout-gt-xs="row">
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Username</label>
                     <md-icon class="material-icons">person</md-icon>
-                    <input ng-model="user.username" required name="username" ng-pattern="/^[a-zA-Z0-9_]*$/"
+                    <input ng-model="vm.user.username" required name="username" ng-pattern="/^[a-zA-Z0-9_]*$/"
                            ng-minlength="3" ng-maxlength="30">
                     <div ng-messages="editSettings.username.$error">
                         <div ng-message="required">This is required.</div>
@@ -19,7 +19,7 @@
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Fullname</label>
                     <md-icon class="material-icons">person</md-icon>
-                    <input ng-model="user.fullname" required name="fullname" ng-pattern="/^[a-zA-Z0-9_\s]*$/"
+                    <input ng-model="vm.user.fullname" required name="fullname" ng-pattern="/^[a-zA-Z0-9_\s]*$/"
                            ng-minlength="3" ng-maxlength="30">
                     <div ng-messages="editSettings.fullname.$error">
                         <div ng-message="required">This is required.</div>
@@ -34,7 +34,7 @@
                 <md-input-container class="md-block" flex-gt-sm>
                     <label>Email</label>
                     <md-icon class="material-icons">email</md-icon>
-                    <input ng-model="user.email" type="email" required name="email" ng-pattern="/^.+@.+\..+$/"
+                    <input ng-model="vm.user.email" type="email" required name="email" ng-pattern="/^.+@.+\..+$/"
                            ng-minlength="10" ng-maxlength="100">
                     <div ng-messages="editSettings.email.$error">
                         <div ng-message="required">This is required.</div>

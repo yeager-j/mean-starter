@@ -6,11 +6,11 @@
             </md-card-title-text>
         </md-card-title>
         <md-card-content>
-            <form ng-submit="register()" name="registerForm">
+            <form ng-submit="vm.register()" name="registerForm">
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Full Name</label>
-                        <input ng-model="user.fullname" name="fullname" required ng-pattern="/^[a-zA-Z0-9_\s]*$/"
+                        <input ng-model="vm.user.fullname" name="fullname" required ng-pattern="/^[a-zA-Z0-9_\s]*$/"
                                ng-minlength="3" ng-maxlength="30">
                         <div ng-messages="registerForm.fullname.$error">
                             <div ng-message="required">This is required.</div>
@@ -22,7 +22,7 @@
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Username</label>
-                        <input ng-model="user.username" name="username" required ng-pattern="/^[a-zA-Z0-9_]*$/"
+                        <input ng-model="vm.user.username" name="username" required ng-pattern="/^[a-zA-Z0-9_]*$/"
                                ng-minlength="3" ng-maxlength="18">
                         <div ng-messages="registerForm.username.$error">
                             <div ng-message="required">This is required.</div>
@@ -36,7 +36,7 @@
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Email</label>
-                        <input ng-model="user.email" type="email" required name="email" ng-pattern="/^.+@.+\..+$/"
+                        <input ng-model="vm.user.email" type="email" required name="email" ng-pattern="/^.+@.+\..+$/"
                                ng-minlength="10" ng-maxlength="100">
                         <div ng-messages="registerForm.email.$error">
                             <div ng-message="required">This is required.</div>
@@ -49,7 +49,7 @@
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Password</label>
-                        <input ng-model="user.password" type="password" required name="password" ng-minlength="8">
+                        <input ng-model="vm.user.password" type="password" required name="password" ng-minlength="8">
                         <div ng-messages="registerForm.password.$error">
                             <div ng-message="required">This is required.</div>
                             <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
@@ -59,8 +59,8 @@
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Confirm Password</label>
-                        <input ng-model="user.confirm" type="password" required name="confirm"
-                               compare-to="user.password">
+                        <input ng-model="vm.user.confirm" type="password" required name="confirm"
+                               compare-to="vm.user.password">
                         <div ng-messages="registerForm.confirm.$error">
                             <div ng-message="required">This is required.</div>
                             <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">

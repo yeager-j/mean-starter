@@ -3,23 +3,26 @@
  */
 
 (function () {
-    profileController.$inject = ['$scope', 'fetchUser', '$routeParams', '$mdDialog'];
-    function profileController($scope, fetchUser, $routeParams, $mdDialog) {
-        $scope.user = {};
+    angular.module('starterkit')
+        .controller('ProfileController', ProfileController);
+
+    ProfileController.$inject = ['fetchUser', '$routeParams', '$mdDialog'];
+    function ProfileController(fetchUser, $routeParams, $mdDialog) {
+        var vm = this;
+        vm.user = {};
+        vm.editProfile = editProfile;
 
         fetchUser.getUser($routeParams.user, function (response) {
-            $scope.user = response;
+            vm.user = response;
         });
 
-        $scope.editProfile = function () {
+        function editProfile() {
             $mdDialog.show({
                 templateUrl: 'profile/edit/edit.template.html',
-                controller: 'editCtrl',
+                controller: 'EditController',
+                controllerAs: 'vm',
                 clickOutsideToClose: true
             })
         }
     }
-
-    angular.module('starterkit')
-        .controller('profileCtrl', profileController)
 })();
