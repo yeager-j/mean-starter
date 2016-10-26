@@ -18,6 +18,16 @@ A starterkit for developing projects using the MEAN Stack and other technologies
 
 - **Material Design**: I am using the Angular Material framework for the majority of styling.
 
+##Features
+- **Front End**:
+    - **Profile Page**: When a user registers, they are given a profile page. From there they can edit their username, full name, and email.
+    - **Members Page**: This page displays a list of all registered users.
+    - **Material Design**: Website is beautifully styled using material design. It is also 100% responsive on all screen sizes.
+- **Back End**:
+    - **Passport**: Registration and Login is handled using Passport. For now, only the local strategy is used. 
+    - **Token Authentication**: To protect a route, you can add authentication middleware as demonstrated in the index.js file. Users must provide a valid token.
+    - **Correctly Done Encryption**: Security is taken seriously. Crypto is used to hash passwords with a unique salt. Even if someone gains access to the database they will never be able to decrypt the passwords.
+
 
 ## Installation
 If you'd like to spin up your own server, follow these instructions:
