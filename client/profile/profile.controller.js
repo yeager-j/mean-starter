@@ -11,13 +11,12 @@
             $scope.user = response;
         });
 
-        $scope.editProfile = function(){
-            $mdDialog.show(
-                $mdDialog.alert()
-                    .textContent('You edited your profile')
-                    .title('Edit Profile')
-                    .ok('Great!')
-            )
+        $scope.editProfile = function () {
+            $mdDialog.show({
+                templateUrl: 'profile/edit/edit.template.html',
+                controller: 'editCtrl',
+                clickOutsideToClose: true
+            })
         }
     }
 

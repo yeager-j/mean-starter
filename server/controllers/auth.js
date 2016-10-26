@@ -117,3 +117,76 @@ module.exports.login = function (req, res) {
         })(req, res);
     }
 };
+
+module.exports.edit = function (req, res) {
+    User.findOne({
+        email: req.body.email
+    }, function (err, user) {
+        if (user && user._id != req.payload._id) {
+            sendJSONresponse(res, 418, {
+                message: 'Email already exists!'
+            })
+        } else {
+            User.findOne({
+                username: req.body.username
+            }, function (err, user) {
+                if (user && user._id != req.payload._id) {
+                    sendJSONresponse(res, 418, {
+                        message: 'Username already exists!'
+                    })
+                } else {
+                    var passed = validate.validate([
+                        {
+                            value: req.body.username,
+                            checks: {
+                                required: true,
+                                minlength: 3,
+                                maxlength: 18,
+                                regex: /^[a-zA-Z0-9_]*$/
+                            }
+                        },
+                        {
+                            value: req.body.fullname,
+                            checks: {
+                                required: true,
+                                minlength: 3,
+                                maxlength: 30,
+                                regex: /^[a-zA-Z0-9_\s]*$/
+                            }
+                        },
+                        {
+                            value: req.body.email,
+                            checks: {
+                                required: true,
+                                minlength: 3,
+                                maxlength: 100,
+                                regex: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                            }
+                        }
+                    ]);
+
+                    if (passed) {
+                        User.findByIdAndUpdate(req.payload._id, {
+                            $set: {
+                                email: req.body.email,
+                                username: req.body.username,
+                                fullname: req.body.fullname
+                            }
+                        }, {
+                            new: true
+                        }, function (err, user) {
+                            sendJSONresponse(res, 200, {
+                                token: user.generateJwt(),
+                                message: 'You have successfully edited your profile.'
+                            })
+                        })
+                    } else {
+                        sendJSONresponse(res, 400, {
+                            message: "Invalid input. Please don't mess with Angular's form validation."
+                        })
+                    }
+                }
+            })
+        }
+    })
+};

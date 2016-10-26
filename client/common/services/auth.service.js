@@ -68,6 +68,19 @@
             })
         };
 
+        this.edit = function (user) {
+            var auth = this;
+
+            return $http({
+                method: 'POST',
+                url: '/api/edit',
+                headers: {
+                    authorization: 'Bearer ' + auth.getToken()
+                },
+                data: user
+            })
+        };
+
         this.getUser = function (uid) {
             return $http.get('/api/get_user/' + uid);
         };

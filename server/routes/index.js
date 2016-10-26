@@ -12,6 +12,7 @@ var users = require('../controllers/user');
 
 router.post('/register', authentication.register);
 router.post('/login', authentication.login);
+router.post('/edit', auth, authentication.edit);
 
 router.get('/get_user/:id', users.getUser);
 router.get('/get_users', users.getUsers);
