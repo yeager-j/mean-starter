@@ -2,7 +2,7 @@ var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
 
-var sendJSONresponse = function (res, status, content) {
+var sendJSONResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
 };
@@ -17,19 +17,19 @@ module.exports.getUser = function (req, res) {
     User.findOne({_id: req.params.id}, function (err, user) {
         if (user) {
             user = scrub(user);
-            sendJSONresponse(res, 200, user);
+            sendJSONResponse(res, 200, user);
         } else {
             User.findOne({username: req.params.id}, function (err, user) {
                 if (user) {
                     user = scrub(user);
-                    sendJSONresponse(res, 200, user)
+                    sendJSONResponse(res, 200, user)
                 } else {
                     User.findOne({email: req.params.id}, function (err, user) {
                         if (user) {
                             user = scrub(user);
-                            sendJSONresponse(res, 200, user)
+                            sendJSONResponse(res, 200, user)
                         } else {
-                            sendJSONresponse(res, 404, {
+                            sendJSONResponse(res, 404, {
                                 message: 'User not found.'
                             })
                         }
@@ -46,6 +46,6 @@ module.exports.getUsers = function (req, res) {
             return scrub(user);
         });
 
-        sendJSONresponse(res, 200, response);
+        sendJSONResponse(res, 200, response);
     })
 };

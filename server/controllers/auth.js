@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken');
 var config = require('../config/config');
 var validate = require('../utilities/validate');
 
-var sendJSONresponse = function (res, status, content) {
+var sendJSONResponse = function (res, status, content) {
     res.status(status);
     res.json(content);
 };
@@ -15,20 +15,20 @@ var authenticate = function (req, res, callback) {
 
     jwt.verify(auth, config.secretKey, function (err, decoded) {
         if (err) {
-            sendJSONresponse(res, 401, {
+            sendJSONResponse(res, 401, {
                 message: 'Your token is invalid.'
             })
         } else {
             User.findById(decoded._id, function (err, user) {
                 if (err) {
-                    sendJSONresponse(res, 401, {
+                    sendJSONResponse(res, 401, {
                         message: 'Your token is invalid.'
                     })
                 } else {
                     if (user._id == req.payload._id && user.hash == req.payload.hash) {
                         callback();
                     } else {
-                        sendJSONresponse(res, 401, {
+                        sendJSONResponse(res, 401, {
                             message: 'Your token is invalid.'
                         })
                     }
@@ -40,19 +40,19 @@ var authenticate = function (req, res, callback) {
 
 module.exports.register = function (req, res) {
     if (!req.body.username || !req.body.email || !req.body.password) {
-        sendJSONresponse(res, 400, {
-            'message': 'All fields required'
+        sendJSONResponse(res, 400, {
+            message: 'All fields required'
         });
     } else {
         User.findOne({'email': req.body.email}, function (err, userInfo) {
             if (userInfo) {
                 res.status(500);
-                res.json({'message': 'Email already registered'});
+                res.json({message: 'Email already registered'});
             } else {
                 User.findOne({'username': req.body.username}, function (err, userInfo) {
                     if (userInfo) {
                         res.status(500);
-                        res.json({'message': 'Username already registered'});
+                        res.json({message: 'Username already registered'});
                     } else {
                         var passed = validate.validate([
                             {
@@ -111,7 +111,7 @@ module.exports.register = function (req, res) {
                                 });
                             });
                         } else {
-                            sendJSONresponse(res, 401, {
+                            sendJSONResponse(res, 401, {
                                 message: 'Invalid input. Please don\'t mess with Angular\'s form validation.'
                             })
                         }
@@ -124,19 +124,19 @@ module.exports.register = function (req, res) {
 
 module.exports.login = function (req, res) {
     if (!req.body.email || !req.body.password) {
-        sendJSONresponse(res, 400, {
-            'message': 'All fields required'
+        sendJSONResponse(res, 400, {
+            message: 'All fields required'
         });
     } else {
         passport.authenticate('local', function (err, user, info) {
             var token;
             if (err) {
-                sendJSONresponse(res, 404, {
-                    'message': 'Error!'
+                sendJSONResponse(res, 404, {
+                    message: 'Error!'
                 });
             } else if (user) {
                 token = user.generateJwt();
-                sendJSONresponse(res, 200, {
+                sendJSONResponse(res, 200, {
                     token: token
                 });
             } else {
@@ -151,7 +151,7 @@ module.exports.edit = function (req, res) {
         email: req.body.email
     }, function (err, user) {
         if (user && user._id != req.payload._id) {
-            sendJSONresponse(res, 418, {
+            sendJSONResponse(res, 418, {
                 message: 'Email already exists!'
             })
         } else {
@@ -159,7 +159,7 @@ module.exports.edit = function (req, res) {
                 username: req.body.username
             }, function (err, user) {
                 if (user && user._id != req.payload._id) {
-                    sendJSONresponse(res, 418, {
+                    sendJSONResponse(res, 418, {
                         message: 'Username already exists!'
                     })
                 } else {
@@ -204,13 +204,13 @@ module.exports.edit = function (req, res) {
                             }, {
                                 new: true
                             }, function (err, user) {
-                                sendJSONresponse(res, 200, {
+                                sendJSONResponse(res, 200, {
                                     message: 'You have successfully edited your profile.',
                                     token: user.generateJwt()
                                 })
                             })
                         } else {
-                            sendJSONresponse(res, 400, {
+                            sendJSONResponse(res, 400, {
                                 message: 'Invalid input. Please don\'t mess with Angular\'s form validation.'
                             })
                         }
@@ -244,25 +244,27 @@ module.exports.changePassword = function (req, res) {
         User.findById(req.payload._id, function (err, user) {
             if (user.checkPassword(req.body.current)) {
                 if (err) {
-                    sendJSONresponse(res, 500, {
-                        'message': 'Unexpected error.'
+                    sendJSONResponse(res, 500, {
+                        message: 'Unexpected error.'
                     })
                 } else if (user) {
-                    user.setPassword(req.body.password);
-                    user.save(function (err, user) {
-                        sendJSONresponse(res, 200, {
-                            'message': 'You have successfully changed your password.'
-                        })
-                    });
+                    authenticate(req, res, function () {
+                        user.setPassword(req.body.password);
+                        user.save(function (err, user) {
+                            sendJSONResponse(res, 200, {
+                                message: 'You have successfully changed your password.'
+                            })
+                        });
+                    })
 
                 } else {
-                    sendJSONresponse(res, 500, {
-                        'message': 'Unauthorized'
+                    sendJSONResponse(res, 500, {
+                        message: 'Unauthorized'
                     })
                 }
             } else {
-                sendJSONresponse(res, 401, {
-                    'message': 'You have provided a bad password.'
+                sendJSONResponse(res, 401, {
+                    message: 'You have provided a bad password.'
                 })
             }
         })
@@ -270,31 +272,9 @@ module.exports.changePassword = function (req, res) {
 };
 
 module.exports.validateToken = function (req, res) {
-    var auth = req.get('authorization').split(' ')[1];
-
-    jwt.verify(auth, config.secretKey, function (err, decoded) {
-        if (err) {
-            sendJSONresponse(res, 401, {
-                message: 'Your token is invalid.'
-            })
-        } else {
-            User.findById(decoded._id, function (err, user) {
-                if (err) {
-                    sendJSONresponse(res, 401, {
-                        message: 'Your token is invalid.'
-                    })
-                } else {
-                    if (user._id == req.payload._id && user.hash == req.payload.hash) {
-                        sendJSONresponse(res, 200, {
-                            message: 'Your token is valid.'
-                        })
-                    } else {
-                        sendJSONresponse(res, 401, {
-                            message: 'Your token is invalid.'
-                        })
-                    }
-                }
-            })
-        }
+    authenticate(req, res, function () {
+        sendJSONResponse(res, 200, {
+            message: 'Your token is valid.'
+        })
     })
 };
