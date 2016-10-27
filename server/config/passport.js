@@ -15,16 +15,16 @@ passport.use(new LocalStrategy({
         }
 
         if (!user) {
-            console.log("No user");
+            console.log('No user');
             return done(null, false, {
-                message: "User not found"
+                message: 'User not found'
             });
         }
 
         if (!user.checkPassword(password)) {
-            console.log("Wrong password");
+            console.log('Wrong password');
             return done(null, false, {
-                message: "Incorrect password"
+                message: 'Incorrect password'
             });
         }
 

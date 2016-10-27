@@ -9,7 +9,6 @@ var sendJSONresponse = function (res, status, content) {
 
 var scrub = function (user) {
     user.hash = '';
-    user.salt = '';
 
     return user;
 };
@@ -31,7 +30,7 @@ module.exports.getUser = function (req, res) {
                             sendJSONresponse(res, 200, user)
                         } else {
                             sendJSONresponse(res, 404, {
-                                message: "User not found."
+                                message: 'User not found.'
                             })
                         }
                     })

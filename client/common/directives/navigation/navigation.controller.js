@@ -6,8 +6,8 @@
     angular.module('starterkit')
         .controller('NavigationController', NavigationController);
 
-    NavigationController.$inject = ['$scope', '$location', '$mdSidenav', '$mdToast', 'authentication', 'fetchUser'];
-    function NavigationController($scope, $location, $mdSidenav, $mdToast, authentication, fetchUser) {
+    NavigationController.$inject = ['$scope', '$route', '$location', '$mdSidenav', '$mdToast', 'authentication', 'fetchUser'];
+    function NavigationController($scope, $route, $location, $mdSidenav, $mdToast, authentication, fetchUser) {
         var vm = this;
         vm.user = {
             username: 'Guest'
@@ -43,6 +43,22 @@
                     .hideDelay(3000)
             )
         };
+
+        $scope.$on('$routeChangeStart', function (next, current) {
+            if (authentication.isLoggedIn()) {
+                authentication.validate()
+                    .then(function success(response) {
+                        // do nothing
+                    }, function failure(response) {
+                        vm.logout();
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('Your token has been invalidated. Please log in again.')
+                                .hideDelay(3000)
+                        )
+                    })
+            }
+        });
 
         $scope.$watch(function () {
             return authentication.getToken();

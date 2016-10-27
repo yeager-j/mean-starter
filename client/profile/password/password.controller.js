@@ -1,6 +1,6 @@
 (function () {
     angular.module('starterkit')
-        .controller('EditController', EditController);
+        .controller('PasswordController', EditController);
 
     EditController.$inject = ['$mdDialog', 'authentication', 'fetchUser', '$location', '$mdToast'];
     function EditController($mdDialog, authentication, fetchUser, $location, $mdToast) {
@@ -9,16 +9,21 @@
         vm.edit = edit;
 
         function edit() {
-            authentication.edit({
-                username: vm.user.username,
-                fullname: vm.user.fullname,
-                email: vm.user.email
+            authentication.changePassword({
+                current: vm.user.current,
+                password: vm.user.password,
+                confirm: vm.user.confirm
             }).then(function (response) {
-                $location.path('/profile/' + vm.user.username);
-                authentication.saveToken(response.data.token);
+                authentication.logout();
+                $location.path('/');
                 $mdToast.show(
                     $mdToast.simple()
                         .textContent(response.data.message)
+                );
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('You have been automatically logged out. Please log in again.')
+                        .hideDelay(3000)
                 );
                 $mdDialog.cancel();
             }, function (response) {

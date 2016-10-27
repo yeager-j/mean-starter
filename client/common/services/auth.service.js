@@ -17,7 +17,7 @@
         };
 
         this.logout = function () {
-            console.log("loggin out");
+            console.log('loggin out');
             $window.localStorage.removeItem('mean-token')
         };
 
@@ -45,6 +45,18 @@
                     uuid: payload._id
                 };
             }
+        };
+
+        this.validate = function () {
+            var auth = this;
+
+            return $http({
+                method: 'POST',
+                url: '/api/validate',
+                headers: {
+                    authorization: 'Bearer ' + auth.getToken()
+                }
+            })
         };
 
         this.register = function (user, callback) {
@@ -77,6 +89,19 @@
             return $http({
                 method: 'POST',
                 url: '/api/edit',
+                headers: {
+                    authorization: 'Bearer ' + auth.getToken()
+                },
+                data: user
+            })
+        };
+
+        this.changePassword = function (user) {
+            var auth = this;
+
+            return $http({
+                method: 'POST',
+                url: '/api/change_password',
                 headers: {
                     authorization: 'Bearer ' + auth.getToken()
                 },

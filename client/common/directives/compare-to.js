@@ -5,9 +5,9 @@
 (function () {
     function compareTo() {
         return {
-            require: "ngModel",
+            require: 'ngModel',
             scope: {
-                otherModelValue: "=compareTo"
+                otherModelValue: '=compareTo'
             },
             link: function (scope, element, attributes, ngModel) {
 
@@ -15,7 +15,7 @@
                     return modelValue == scope.otherModelValue;
                 };
 
-                scope.$watch("otherModelValue", function () {
+                scope.$watch('otherModelValue', function () {
                     ngModel.$validate();
                 });
             }

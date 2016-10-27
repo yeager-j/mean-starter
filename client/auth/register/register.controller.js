@@ -5,7 +5,7 @@
 (function () {
     angular.module('starterkit')
         .controller('RegisterController', RegisterController);
-    
+
     RegisterController.$inject = ['$location', 'authentication', '$mdToast'];
     function RegisterController($location, authentication, $mdToast) {
         var vm = this;

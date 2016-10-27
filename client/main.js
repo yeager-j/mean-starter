@@ -3,4 +3,5 @@
  */
 (function () {
     angular.module('starterkit', ['ngRoute', 'ngMaterial', 'ngMessages', 'ngAnimate']);
+
 })();

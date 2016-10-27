@@ -11,6 +11,7 @@
         var vm = this;
         vm.user = {};
         vm.editProfile = editProfile;
+        vm.changePassword = changePassword;
 
         fetchUser.getUser($routeParams.user, function (response) {
             vm.user = response;
@@ -20,6 +21,15 @@
             $mdDialog.show({
                 templateUrl: 'profile/edit/edit.template.html',
                 controller: 'EditController',
+                controllerAs: 'vm',
+                clickOutsideToClose: true
+            })
+        }
+
+        function changePassword() {
+            $mdDialog.show({
+                templateUrl: 'profile/password/password.template.html',
+                controller: 'PasswordController',
                 controllerAs: 'vm',
                 clickOutsideToClose: true
             })
