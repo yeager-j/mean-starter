@@ -25,7 +25,7 @@ A starterkit for developing projects using the MEAN Stack and other technologies
     - **Material Design**: Website is beautifully styled using material design. It is also 100% responsive on all screen sizes.
 - **Back End**:
     - **Passport**: Registration and Login is handled using Passport. For now, only the local strategy is used. 
-    - **Token Authentication**: To protect a route, you can add authentication middleware as demonstrated in the index.js file. Users must provide a valid token.
+    - **Token Authentication**: To protect a route, you can add authentication middleware as demonstrated in the index.js file. Users must provide a valid token. Tokens contain the user's ID and hash in the payload. If the user changes his password, and by extension his hash, all previous tokens are invalidated.
     - **Correctly Done Encryption**: Security is taken seriously. Crypto is used to hash passwords with a unique salt. Even if someone gains access to the database they will never be able to decrypt the passwords.
 
 
