@@ -25,7 +25,7 @@ var authenticate = function (req, res, callback) {
                         message: 'Your token is invalid.'
                     })
                 } else {
-                    if (user._id == req.payload._id && user.hash == req.payload.hash) {
+                    if (user.hash == req.payload.hash) {
                         callback();
                     } else {
                         sendJSONResponse(res, 401, {
