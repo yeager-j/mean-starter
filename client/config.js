@@ -14,19 +14,34 @@
             .when('/register', {
                 templateUrl: '/auth/register/register.view.html',
                 controller: 'RegisterController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.shouldBeLoggedIn(false);
+                    }]
+                }
             })
 
             .when('/login', {
                 templateUrl: '/auth/login/login.view.html',
                 controller: 'LoginController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.shouldBeLoggedIn(false);
+                    }]
+                }
             })
 
             .when('/members', {
                 templateUrl: 'members/members.view.html',
                 controller: 'MemberController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                    access: ['Access', function (Access) {
+                        return Access.hasPermission(2);
+                    }]
+                }
             })
 
             .when('/profile/:user', {

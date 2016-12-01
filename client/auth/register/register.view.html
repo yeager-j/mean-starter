@@ -10,7 +10,7 @@
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Full Name</label>
-                        <input ng-model="vm.user.fullname" name="fullname" required ng-pattern="/^[a-zA-Z0-9_\s]*$/"
+                        <input ng-model="vm.user.fullname" name="fullname" required
                                ng-minlength="3" ng-maxlength="30">
                         <div ng-messages="registerForm.fullname.$error">
                             <div ng-message="required">This is required.</div>
@@ -22,7 +22,7 @@
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Username</label>
-                        <input ng-model="vm.user.username" name="username" required ng-pattern="/^[a-zA-Z0-9_]*$/"
+                        <input ng-model="vm.user.username" name="username" required ng-pattern="/^[a-zA-Z0-9-_]*$/"
                                ng-minlength="3" ng-maxlength="18">
                         <div ng-messages="registerForm.username.$error">
                             <div ng-message="required">This is required.</div>
